@@ -1,6 +1,11 @@
+import random
+
 from py_selenium_auto.browsers.browser_services import BrowserServices
+from py_selenium_auto.elements.element_factory import ElementFactory
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
+from py_selenium_auto_core.elements.constants.element_state import ElementState
+from py_selenium_auto_core.elements.constants.elements_count import ElementsCount
 from selenium.webdriver.common.by import By
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
@@ -18,8 +23,6 @@ class GamePage(Form):
     __EmailTxbXpath: str = "//*[@placeholder='Your email']"
     __DomainTxbXpath: str = "//*[@placeholder='Domain']"
     __PasswordTxbXpath: str = "//*[@placeholder='Choose Password']"
-    __DropdownCmbXpath: str = "//*[@class='dropdown__list-item'][1]"
-    __TextLblXpath: str = "//*[@class='terms-and-conditions__text-content']"
 
     def __init__(self):
         super().__init__(
@@ -35,19 +38,12 @@ class GamePage(Form):
         self.password_text_box: TextBox = TextBox(
             Locator(By.XPATH, self.__PasswordTxbXpath),
             "password")
-        self.dropdown_opener = ComboBox(
-            Locator(By.CLASS_NAME, "dropdown__opener"),
-            "dropdown_opener")
-        self.dropdown_dot_com = ComboBox(
-            Locator(By.XPATH, self.__DropdownCmbXpath),
-            "dropdown_dot_com")
         self.terms_label_agree: Label = Label(
-            Locator(By.CLASS_NAME, "login-form__terms-conditions-underline"),
+            Locator(By.CLASS_NAME, "checkbox__box"),
             "terms_label_agree")
-        self.text_content_for_scroll: Label = Label(
-            Locator(By.XPATH, self.__TextLblXpath),
-            "text_content_for_scroll"
-        )
+        self.dropdown_list: Label = Label(
+            Locator(By.CLASS_NAME, "dropdown__list-item"),
+            "dropdown_list")
 
     @staticmethod
     def assert_cart_number():
@@ -73,18 +69,20 @@ class GamePage(Form):
         self.password_text_box.send_keys(self.__password)
         assert self.password_text_box.value == self.__password
 
-    def select_dot_org(self):
-        """Выбираем из dropbox .com"""
-        self.dropdown_opener.click()
-        self.dropdown_dot_com.click()
-        # assert self.dropdown_dot_com.js_actions.get_selected_text() == ".org"
+    def select_dot_smth(self):
+        """Выбираем из dropbox случайное значение"""
+        dropdown_locator = Locator(By.CLASS_NAME, "dropdown__list")
+
+        dropdown_elements = self.dropdown_list.finder.find_elements(
+            locator=dropdown_locator,
+            state=ElementState.Displayed,
+            timeout=10,
+            name="Dropdown List Items"
+        )
+
+        # Далее вы можете что-то делать с найденными элементами, например, распечатать их
+        for element in dropdown_elements:
+            print(element)
 
     def agree_terms(self):
         self.terms_label_agree.click()
-
-    def scroll_to_bottom(self):
-        """Прокрутка страницы до последней строки."""
-        # script = "arguments[0].scrollTop = arguments[0].scrollHeight;"
-        # self.driver.execute_script(script, element
-        # self.text_content_for_scroll.js_actions.scroll_into_view()
-

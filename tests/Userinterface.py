@@ -30,10 +30,8 @@ class TestUI:
         game_page.send_email()
         game_page.send_domain()
         game_page.send_password()
-        game_page.select_dot_org()
+        game_page.select_dot_smth()
         game_page.agree_terms()
-        game_page.scroll_to_bottom()
-        time.sleep(5)
         """Закрываем браузер"""
         TestUI.teardown_method()
 
