@@ -1,6 +1,6 @@
 import random
 import string
-from tests.resources.generateRandomText import GenerateRandomText
+from utilities.generateRandomText import GenerateRandomText
 
 
 class PasswordGenerator:

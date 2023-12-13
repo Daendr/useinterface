@@ -1,12 +1,13 @@
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto.elements.text_box import TextBox
+from py_selenium_auto.elements.label import Label
 from selenium.webdriver.common.by import By
-from py_selenium_auto.elements.link import Link
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
 from py_selenium_auto.elements.combo_box import ComboBox
-from tests.resources.emailGenerator import EmailGenerator
-from tests.resources.passwordGenerator import PasswordGenerator
+from utilities.emailGenerator import EmailGenerator
+from utilities.passwordGenerator import PasswordGenerator
+from py_selenium_auto.elements.element import Element
 
 
 class GamePage(Form):
@@ -18,6 +19,7 @@ class GamePage(Form):
     __DomainTxbXpath: str = "//*[@placeholder='Domain']"
     __PasswordTxbXpath: str = "//*[@placeholder='Choose Password']"
     __DropdownCmbXpath: str = "//*[@class='dropdown__list-item'][1]"
+    __TextLblXpath: str = "//*[@class='terms-and-conditions__text-content']"
 
     def __init__(self):
         super().__init__(
@@ -39,6 +41,13 @@ class GamePage(Form):
         self.dropdown_dot_com = ComboBox(
             Locator(By.XPATH, self.__DropdownCmbXpath),
             "dropdown_dot_com")
+        self.terms_label_agree: Label = Label(
+            Locator(By.CLASS_NAME, "login-form__terms-conditions-underline"),
+            "terms_label_agree")
+        self.text_content_for_scroll: Label = Label(
+            Locator(By.XPATH, self.__TextLblXpath),
+            "text_content_for_scroll"
+        )
 
     @staticmethod
     def assert_cart_number():
@@ -69,3 +78,13 @@ class GamePage(Form):
         self.dropdown_opener.click()
         self.dropdown_dot_com.click()
         # assert self.dropdown_dot_com.js_actions.get_selected_text() == ".org"
+
+    def agree_terms(self):
+        self.terms_label_agree.click()
+
+    def scroll_to_bottom(self):
+        """Прокрутка страницы до последней строки."""
+        # script = "arguments[0].scrollTop = arguments[0].scrollHeight;"
+        # self.driver.execute_script(script, element
+        # self.text_content_for_scroll.js_actions.scroll_into_view()
+
