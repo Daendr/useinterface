@@ -32,6 +32,7 @@ class TestUI:
         game_page.send_password()
         game_page.select_dot_smth()
         game_page.agree_terms()
+
         """Закрываем браузер"""
         TestUI.teardown_method()
 

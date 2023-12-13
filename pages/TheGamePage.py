@@ -72,17 +72,14 @@ class GamePage(Form):
     def select_dot_smth(self):
         """Выбираем из dropbox случайное значение"""
         dropdown_locator = Locator(By.CLASS_NAME, "dropdown__list")
-
-        dropdown_elements = self.dropdown_list.finder.find_elements(
-            locator=dropdown_locator,
-            state=ElementState.Displayed,
-            timeout=10,
-            name="Dropdown List Items"
-        )
-
-        # Далее вы можете что-то делать с найденными элементами, например, распечатать их
-        for element in dropdown_elements:
-            print(element)
+        dropdown_elements = BrowserServices.Instance.browser.driver.find_elements(By.CLASS_NAME, "dropdown__list-item")
+        # dropdown_elements = self.dropdown_list.finder.find_elements(
+        #     locator=dropdown_locator,
+        #     state=ElementState.Displayed,
+        #     timeout=10,
+        #     name="Dropdown List Items"
+        # )
+        dropdown_elements[1].click()
 
     def agree_terms(self):
         self.terms_label_agree.click()
