@@ -1,6 +1,5 @@
 import random
 import os
-import pyautogui
 import time
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto.elements.element_factory import ElementFactory
@@ -19,7 +18,6 @@ from py_selenium_auto.elements.element import Element
 from py_selenium_auto.elements.button import Button
 import subprocess
 import time
-from pygetwindow import getWindowsWithTitle
 
 class GamePage(Form):
     __email = EmailGenerator.generate_email()
@@ -114,13 +112,9 @@ class GamePage(Form):
 
     def upload_photo(self):
         """Скачиваем фото и отправляем на сервер"""
-        file_name = "avatar.png"
-        file_path = os.path.join(os.path.dirname(__file__), file_name)
-        self.load_button.click()
+        # Получение пути к текущему каталогу скрипта Python
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Сборка относительного пути к исполняемому файлу AutoIt
+        autoit_exe_path = os.path.join(script_dir, "..\\tests\\choose_file.exe")
         self.upload_button.click()
-        # Запускаем AutoIt скрипт
-        subprocess.Popen(["autoit3", "choose_file.au3"])
-
-        # Ждем, пока окно выбора файла закроется
-        while getWindowsWithTitle("Open"):
-            time.sleep(1)
+        subprocess.run([autoit_exe_path])

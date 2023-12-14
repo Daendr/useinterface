@@ -32,7 +32,7 @@ class TestUI:
         game_page.select_dot_smth()
         game_page.agree_terms()
         game_page.click_next_btn()
-        # input("Press Enter to continue...")
 
         """4. Выберите 2 случайных интереса, загрузите изображение, нажмите кнопку 'Next'"""
         game_page.upload_photo()
+

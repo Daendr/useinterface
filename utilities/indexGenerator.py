@@ -12,7 +12,7 @@ class IndexGenerator:
         """Генерирует элемент"""
         cort = elem_class.locator
         cort_1 = elem_xpath.locator.value
-        random_index = random.randint(0, IndexGenerator.give_number_of_elem(cort) - 1)
+        random_index = random.randint(1, IndexGenerator.give_number_of_elem(cort) - 1)
         new_value = f"{cort_1}[{random_index + 1}]"
         new_elem: Label = Label(Locator(By.XPATH, new_value), "Изменённый локатор new_value")
         return new_elem
