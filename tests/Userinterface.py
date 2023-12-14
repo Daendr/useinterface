@@ -1,5 +1,4 @@
 import time
-
 import pytest
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from pages.TheGamePage import GamePage
@@ -32,7 +31,8 @@ class TestUI:
         game_page.send_password()
         game_page.select_dot_smth()
         game_page.agree_terms()
+        game_page.click_next_btn()
+        # input("Press Enter to continue...")
 
-        """Закрываем браузер"""
-        TestUI.teardown_method()
-
+        """4. Выберите 2 случайных интереса, загрузите изображение, нажмите кнопку 'Next'"""
+        game_page.upload_photo()
