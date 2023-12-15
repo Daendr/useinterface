@@ -1,6 +1,9 @@
 import os
+import time
+
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
@@ -70,6 +73,12 @@ class GamePage(Form):
         self.next_button_2_card: Button = Button(
             Locator(By.XPATH, "//*[contains(text(), 'Next')]"),
             "next_button_2_card")
+        self.help_form_btn: Button = Button(
+            Locator(By.CLASS_NAME, "help-form__send-to-bottom-button"),
+            "help_form_btn")
+        self.accept_cookies: Label = Label(
+            Locator(By.CLASS_NAME, "align__cell"),
+            "accept_cookies")
 
     @staticmethod
     def assert_cart_number():
@@ -131,3 +140,27 @@ class GamePage(Form):
         """Нажимаем Next и assert на новую карточку"""
         self.next_button_2_card.click()
         assert self.cart_number_assert.get_text() == '3 / 4'
+
+    def click_next_btn_with_wait(self, timeout=15):
+        """Нажимаем Next и assert на новую карточку"""
+        self.help_form_btn.click()
+
+        start_time = time.time()
+        while True:
+            if not self.help_form_btn.js_actions.is_element_on_screen():
+                print("Элемент не видим.")
+                break
+
+            elapsed_time = time.time() - start_time
+            if elapsed_time > timeout:
+                raise TimeoutException(f"Превышено время ожидания ({timeout} сек) для видимости элемента.")
+
+            time.sleep(1)
+
+        assert not self.help_form_btn.js_actions.is_element_on_screen(), "Форма не исчезла после нажатия кнопки Next"
+
+    def click_accept_cookies(self):
+        """Нажимаем Not really, no и делаем проверку на наличие элемента."""
+        self.accept_cookies.click()
+        time.sleep(5)
+        assert not self.accept_cookies.js_actions.is_element_on_screen()

@@ -1,5 +1,3 @@
-import abc
-
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from selenium.webdriver.common.by import By
 from py_selenium_auto.elements.link import Link
@@ -30,4 +28,5 @@ class StartPage(Form):
         assert start_page.state.is_displayed(), "Start page should be displayed"
 
     def click_here_link(self):
+        """Нажимаем Here"""
         self.here_link.click()
