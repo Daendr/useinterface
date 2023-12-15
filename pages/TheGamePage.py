@@ -18,16 +18,14 @@ class GamePage(Form):
     __email = EmailGenerator.generate_email()
     __domain = EmailGenerator.generate_domain()
     __password = PasswordGenerator.generate_password(__email)
+
+    # Проверочные данные
     __cart_2, __cart_2_1 = '2 / 4', '[2 / 4]'
     __cart_3 = '3 / 4'
 
-    __EmailTxbXpath: str = "//*[@placeholder='Your email']"
-    __DomainTxbXpath: str = "//*[@placeholder='Domain']"
-    __PasswordTxbXpath: str = "//*[@placeholder='Choose Password']"
-    __DropdownCortForIndexGenerator = (By.CLASS_NAME, "dropdown__list-item")
-
+    # Для CheckBoxUtil
     class_name_of_elements, class_name_of_element, unique_label, excluded_values = (
-        "avatar-and-interests__interests-list__item",'checkbox__label', 'for',
+        "avatar-and-interests__interests-list__item", 'checkbox__label', 'for',
         ['interest_unselectall', 'interest_selectall'])
 
     def __init__(self):
@@ -36,13 +34,13 @@ class GamePage(Form):
             "Карточка 1",
         )
         self.email_text_box: TextBox = TextBox(
-            Locator(By.XPATH, self.__EmailTxbXpath),
+            Locator(By.XPATH, "//*[@placeholder='Your email']"),
             "email")
         self.domain_text_box: TextBox = TextBox(
-            Locator(By.XPATH, self.__DomainTxbXpath),
+            Locator(By.XPATH, "//*[@placeholder='Domain']"),
             "domain")
         self.password_text_box: TextBox = TextBox(
-            Locator(By.XPATH, self.__PasswordTxbXpath),
+            Locator(By.XPATH, "//*[@placeholder='Choose Password']"),
             "password")
         self.terms_label_agree: Label = Label(
             Locator(By.CLASS_NAME, "checkbox__box"),
@@ -128,7 +126,7 @@ class GamePage(Form):
         # Получение пути к текущему каталогу скрипта Python
         script_dir = os.path.dirname(os.path.abspath(__file__))
         # Сборка относительного пути к исполняемому файлу AutoIt
-        autoit_exe_path = os.path.join(script_dir, "..\\tests\\choose_file.exe")
+        autoit_exe_path = os.path.join(script_dir, "../utilities/choose_file.exe")
         self.upload_button.click()
         subprocess.run([autoit_exe_path])
 
@@ -158,8 +156,6 @@ class GamePage(Form):
             elapsed_time = time.time() - start_time
             if elapsed_time > timeout:
                 raise TimeoutException(f"Превышено время ожидания ({timeout} сек) для видимости элемента.")
-
-            time.sleep(1)
 
         assert not self.help_form_btn.js_actions.is_element_on_screen(), "Форма не исчезла после нажатия кнопки Next"
 

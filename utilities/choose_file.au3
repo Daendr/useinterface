@@ -10,8 +10,8 @@ WinWaitActive("Открытие", "")
 ; Получение пути к текущему каталогу скрипта
 Local $scriptDir = @ScriptDir
 
-; Создание относительного пути к файлу C:\Users\AU\Desktop\a.ubasnikov\downloads\avatar.png
-Local $filePath = $scriptDir & "\..\downloads\avatar.png"
+; Создание относительного пути к файлу C:\Users\AU\Desktop\a.ubasnikov\utilities\avatar.png
+Local $filePath = $scriptDir & "\..\utilities\avatar.png"
 
 ; Клик в поле "Edit"
 ControlClick("Открытие", "", "[CLASS:Edit; INSTANCE:1]")

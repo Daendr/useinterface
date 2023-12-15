@@ -9,6 +9,7 @@ class TestUI:
     def teardown_method():
         if BrowserServices.Instance.is_browser_started:
             BrowserServices.Instance.browser.quit()
+
     @staticmethod
     @pytest.mark.test1
     def test_case_1():
@@ -72,4 +73,3 @@ class TestUI:
 
         game_page = GamePage()
         game_page.check_timer_starts_with_zero()
-
