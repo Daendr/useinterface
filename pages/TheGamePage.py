@@ -1,23 +1,16 @@
-import random
 import os
-import time
-from py_selenium_auto.browsers.browser_services import BrowserServices
-from py_selenium_auto.elements.element_factory import ElementFactory
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
-from py_selenium_auto_core.elements.constants.element_state import ElementState
-from py_selenium_auto_core.elements.constants.elements_count import ElementsCount
 from selenium.webdriver.common.by import By
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
-from py_selenium_auto.elements.combo_box import ComboBox
+from utilities.check_box_util import CheckBoxUtil
 from utilities.emailGenerator import EmailGenerator
 from utilities.indexGenerator import IndexGenerator
 from utilities.passwordGenerator import PasswordGenerator
-from py_selenium_auto.elements.element import Element
 from py_selenium_auto.elements.button import Button
 import subprocess
-import time
+
 
 class GamePage(Form):
     __email = EmailGenerator.generate_email()
@@ -28,6 +21,10 @@ class GamePage(Form):
     __DomainTxbXpath: str = "//*[@placeholder='Domain']"
     __PasswordTxbXpath: str = "//*[@placeholder='Choose Password']"
     __DropdownCortForIndexGenerator = (By.CLASS_NAME, "dropdown__list-item")
+
+    class_name_of_elements, class_name_of_element, unique_label, excluded_values = (
+        "avatar-and-interests__interests-list__item",'checkbox__label', 'for',
+        ['interest_unselectall', 'interest_selectall'])
 
     def __init__(self):
         super().__init__(
@@ -70,6 +67,9 @@ class GamePage(Form):
         self.load_button: Button = Button(
             Locator(By.XPATH, "//*[contains(text(), 'Download image')]"),
             "load_button")
+        self.next_button_2_card: Button = Button(
+            Locator(By.XPATH, "//*[contains(text(), 'Next')]"),
+            "next_button_2_card")
 
     @staticmethod
     def assert_cart_number():
@@ -118,3 +118,16 @@ class GamePage(Form):
         autoit_exe_path = os.path.join(script_dir, "..\\tests\\choose_file.exe")
         self.upload_button.click()
         subprocess.run([autoit_exe_path])
+
+    def choise_3_check_boxes(self):
+        # Использование метода для получения уникальных значений
+        unique_values = CheckBoxUtil.get_unique_values_from_checkbox_labels(
+            self.class_name_of_elements, self.class_name_of_element, self.unique_label)
+
+        CheckBoxUtil.click_checkbox_by_for_value('interest_unselectall')
+        CheckBoxUtil.click_random_checkboxes(unique_values, self.excluded_values)
+
+    def click_next_btn_on_second_card(self):
+        """Нажимаем Next и assert на новую карточку"""
+        self.next_button_2_card.click()
+        assert self.cart_number_assert.get_text() == '3 / 4'

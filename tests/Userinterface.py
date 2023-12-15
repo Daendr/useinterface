@@ -1,4 +1,3 @@
-import time
 import pytest
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from pages.TheGamePage import GamePage
@@ -35,4 +34,5 @@ class TestUI:
 
         """4. Выберите 2 случайных интереса, загрузите изображение, нажмите кнопку 'Next'"""
         game_page.upload_photo()
-
+        game_page.choise_3_check_boxes()
+        game_page.click_next_btn_on_second_card()
