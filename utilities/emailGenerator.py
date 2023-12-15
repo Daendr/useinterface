@@ -33,16 +33,3 @@ class ComboBoxIndexGenerator:
 
     def get_selected_index(self):
         return self.selected_index
-
-# Пример использования
-# dropdown_locator = "//*[@class='dropdown__list']"
-# generator = ComboBoxIndexGenerator(dropdown_locator)
-# random_index = generator.generate_random_index()
-# print(f"Выбранный случайный индекс: {random_index}")
-
-# Теперь вы можете использовать random_index в вашем методе select_dot_org
-# Например:
-# __DropdownCmbXpath: str = f"{dropdown_locator}/div[@class='dropdown__list-item'][{random_index + 1}]"
-# self.dropdown_dot_com = ComboBox(Locator(By.XPATH, self.__DropdownCmbXpath), "dropdown_dot_com")
-# self.dropdown_opener.click()
-# self.dropdown_dot_com.click()

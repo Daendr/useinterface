@@ -26,7 +26,6 @@ class CheckBoxUtil:
                 # Извлекаем значение атрибута 'for' и добавляем его в список
                 for_attribute = label.get_attribute(unique_label)
                 unique_values.append(for_attribute)
-                print(unique_values)
         return unique_values
 
     @staticmethod

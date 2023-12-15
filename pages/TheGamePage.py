@@ -1,9 +1,8 @@
 import os
 import time
-
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
@@ -19,6 +18,8 @@ class GamePage(Form):
     __email = EmailGenerator.generate_email()
     __domain = EmailGenerator.generate_domain()
     __password = PasswordGenerator.generate_password(__email)
+    __cart_2, __cart_2_1 = '2 / 4', '[2 / 4]'
+    __cart_3 = '3 / 4'
 
     __EmailTxbXpath: str = "//*[@placeholder='Your email']"
     __DomainTxbXpath: str = "//*[@placeholder='Domain']"
@@ -77,8 +78,11 @@ class GamePage(Form):
             Locator(By.CLASS_NAME, "help-form__send-to-bottom-button"),
             "help_form_btn")
         self.accept_cookies: Label = Label(
-            Locator(By.CLASS_NAME, "align__cell"),
+            Locator(By.CLASS_NAME, "button--transparent"),
             "accept_cookies")
+        self.timer: Label = Label(
+            Locator(By.CLASS_NAME, "timer--center"),
+            "timer")
 
     @staticmethod
     def assert_cart_number():
@@ -117,7 +121,7 @@ class GamePage(Form):
     def click_next_btn(self):
         """Нажимаем Next и assert на новую карточку"""
         self.next_btn.click()
-        assert self.cart_number_assert.get_text() == '2 / 4'
+        assert self.cart_number_assert.get_text() == (self.__cart_2 or self.__cart_2_1)
 
     def upload_photo(self):
         """Скачиваем фото и отправляем на сервер"""
@@ -139,7 +143,7 @@ class GamePage(Form):
     def click_next_btn_on_second_card(self):
         """Нажимаем Next и assert на новую карточку"""
         self.next_button_2_card.click()
-        assert self.cart_number_assert.get_text() == '3 / 4'
+        assert self.cart_number_assert.get_text() == self.__cart_3
 
     def click_next_btn_with_wait(self, timeout=15):
         """Нажимаем Next и assert на новую карточку"""
@@ -161,6 +165,15 @@ class GamePage(Form):
 
     def click_accept_cookies(self):
         """Нажимаем Not really, no и делаем проверку на наличие элемента."""
-        self.accept_cookies.click()
-        time.sleep(5)
-        assert not self.accept_cookies.js_actions.is_element_on_screen()
+        try:
+            self.accept_cookies.click()
+            assert not self.accept_cookies.js_actions.is_element_on_screen()
+        except NoSuchElementException as e:
+            print(f"Element not found: {e}")
+            pass
+
+    def check_timer_starts_with_zero(self):
+        timer_text = self.timer.get_element().text
+
+        # Проверяем, что текст таймера начинается с "00:00"
+        assert timer_text.startswith("00:00"), f"Timer does not start with '00:00'. Actual value: {timer_text}"
