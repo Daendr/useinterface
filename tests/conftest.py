@@ -1,13 +1,12 @@
 import logging
 import os
-
 import pytest
+from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto_core.utilities.root_path_helper import RootPathHelper
 
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_session(request):
-    # TODO: workaround to set calling root path, because pytest runs from the root dir
     work_dir = RootPathHelper.current_root_path(__file__)
     os.chdir(work_dir)
     for log_name in [
@@ -17,3 +16,9 @@ def setup_session(request):
     ]:
         logger = logging.getLogger(log_name)
         logger.disabled = True
+
+@pytest.fixture(autouse=True)
+def teardown_function(request):
+    yield
+    if BrowserServices.Instance.is_browser_started:
+        BrowserServices.Instance.browser.quit()
