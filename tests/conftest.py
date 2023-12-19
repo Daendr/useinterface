@@ -5,7 +5,7 @@ from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto_core.utilities.root_path_helper import RootPathHelper
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_session(request):
     work_dir = RootPathHelper.current_root_path(__file__)
     os.chdir(work_dir)

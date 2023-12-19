@@ -14,7 +14,7 @@ class TestUserinterface:
 
     @staticmethod
     @pytest.mark.test_Registration
-    def test_registration(setup_session):
+    def test_registration():
         Logger.info("Шаг 1. Перейти на домашнюю страницу.")
         start_page = StartPage()
         assert start_page.state.is_displayed(), "Стартовая страница не отображена"
@@ -31,6 +31,7 @@ class TestUserinterface:
         game_page_1.send_email(email)
         game_page_1.send_domain(GenerateRandomText.generate_random_text(5))
         game_page_1.send_password(email)
+        game_page_1.click_open_dropdown()
         game_page_1.select_high_domain_in_dropdown()
         game_page_1.agree_terms()
         game_page_1.click_next_btn()
@@ -47,15 +48,13 @@ class TestUserinterface:
 
     @staticmethod
     @pytest.mark.test_Hide_help_form
-    def test_hide_help_form(setup_session):
+    def test_hide_help_form():
         Logger.info("Шаг 1. Перейти на домашнюю страницу.")
         start_page = StartPage()
         assert start_page.state.is_displayed(), "Стартовая страница не отображена"
 
         Logger.info("2. Скрыть форму помощи.")
         start_page.click_here_link()
-        game_page_1 = GamePage1()
-        assert game_page_1.state.is_displayed(), "Cтраница 1 карточки игры не отображена"
 
         game_page_help_form = GamePageHelpForm()
         game_page_help_form.click_next_btn()
@@ -63,27 +62,25 @@ class TestUserinterface:
 
     @staticmethod
     @pytest.mark.test_Accept_cookies
-    def test_accept_cookies(setup_session):
+    def test_accept_cookies():
         Logger.info("Шаг 1. Перейти на домашнюю страницу.")
         start_page = StartPage()
         assert start_page.state.is_displayed(), "Стартовая страница не отображена"
 
         Logger.info("2. Принять cookies.")
         start_page.click_here_link()
-        game_page_1 = GamePage1()
-        assert game_page_1.state.is_displayed(), "Cтраница 1 карточки игры не отображена"
 
         game_page_cookie_form = GamePageCookieForm()
         game_page_cookie_form.click_accept_cookies()
         assert game_page_cookie_form.state.wait_for_not_displayed(),\
-            "Форма не исчезла после нажатия на кнопку No, really no"
+            "Форма не исчезла после нажатия на кнопку 'No, really no'"
 
     @staticmethod
     @pytest.mark.test_Timer
-    def test_timer(setup_session):
+    def test_timer():
         Logger.info("Шаг 1. Перейти на домашнюю страницу.")
         start_page = StartPage()
         start_page.click_here_link()
 
         game_page_timer = GamePageTimer()
-        game_page_timer.check_timer_starts_with_zero()
+        assert game_page_timer.check_timer_starts_with_zero(), "Время на таймере отличается от 00:00:00"

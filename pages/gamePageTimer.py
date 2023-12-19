@@ -16,4 +16,4 @@ class GamePageTimer(Form):
 
     def check_timer_starts_with_zero(self):
         timer_text = self._timer.get_element().text
-        assert timer_text.startswith("00:00:00"), f"Timer does not start with '00:00:00'. Actual value: {timer_text}"
+        return timer_text.startswith("00:00:00")

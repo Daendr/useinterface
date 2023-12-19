@@ -1,9 +1,9 @@
+from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
 from selenium.webdriver.common.by import By
 from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
-from utilities.indexGenerator import IndexGenerator
 from utilities.passwordGenerator import PasswordGenerator
 from py_selenium_auto.elements.button import Button
 
@@ -25,18 +25,13 @@ class GamePage1(Form):
     _open_dropdown: Label = Label(
         Locator(By.CLASS_NAME, "dropdown__header"),
         "open_dropdown")
-    _dropdown_list_class: Label = Label(
-        Locator(By.CLASS_NAME, "dropdown__list-item"),
+    _dropdown_list: Label = Label(
+        Locator(By.XPATH, "//*[@class='dropdown__list-item']"),
         "dropdown_list")
     _next_btn: Button = Button(
         Locator(By.CLASS_NAME, "button--secondary"),
         "next_btn")
-    _accept_cookies: Label = Label(
-        Locator(By.CLASS_NAME, "button--transparent"),
-        "accept_cookies")
-    _timer: Label = Label(
-        Locator(By.CLASS_NAME, "timer--center"),
-        "timer")
+
 
     def __init__(self):
         super().__init__(
@@ -60,9 +55,11 @@ class GamePage1(Form):
         self._password_text_box.send_keys(password)
         assert self._password_text_box.value == password
 
-    def select_high_domain_in_dropdown(self):
+    def click_open_dropdown(self):
         self._open_dropdown.click()
-        new_locator = IndexGenerator.generate_locator(self._dropdown_list_class)
+
+    def select_high_domain_in_dropdown(self):
+        new_locator = BrowserServices.Instance.browser.driver.find_elements(By.XPATH, self._dropdown_list.locator.value)
         new_locator.click()
 
     def agree_terms(self):
