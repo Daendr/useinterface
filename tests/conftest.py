@@ -17,8 +17,12 @@ def setup_session(request):
         logger = logging.getLogger(log_name)
         logger.disabled = True
 
-@pytest.fixture(autouse=True)
-def teardown_function(request):
+    base_url = "https://userinyerface.com/"
+    BrowserServices.Instance.browser.go_to(base_url)
+    BrowserServices.Instance.browser.wait_for_page_to_load()
+    BrowserServices.Instance.browser.maximize()
+
     yield
+
     if BrowserServices.Instance.is_browser_started:
         BrowserServices.Instance.browser.quit()
