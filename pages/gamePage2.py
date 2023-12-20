@@ -45,7 +45,7 @@ class GamePage2(Form):
     def click_checkbox_unselectall(self):
         self._unselectall_checkboxes.click()
 
-    def click_random_checkboxes(self, num):
+    def click_random_checkbox(self, num):
         checkbox_list = BrowserServices.Instance.browser.driver.find_elements(
             By.XPATH, self._check_boxes_elements.locator.value)
         for _ in range(num):
@@ -53,5 +53,5 @@ class GamePage2(Form):
             random_checkbox.click()
             checkbox_list.remove(random_checkbox)
 
-    def click_next_btn_on_second_card(self):
+    def click_next_btn_second_card(self):
         self._next_button_2_card.click()

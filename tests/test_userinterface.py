@@ -32,7 +32,7 @@ class TestUserinterface:
         game_page_1.send_domain(GenerateRandomText.generate_random_text(5))
         game_page_1.send_password(email)
         game_page_1.click_open_dropdown()
-        game_page_1.select_high_domain_in_dropdown()
+        game_page_1.select_high_domain()
         game_page_1.agree_terms()
         game_page_1.click_next_btn()
         game_page_2 = GamePage2()
@@ -41,8 +41,8 @@ class TestUserinterface:
         Logger.info("Шаг 4. Выберите 2 случайных интереса, загрузите изображение, нажмите кнопку 'Next'")
         game_page_2.upload_photo()
         game_page_2.click_checkbox_unselectall()
-        game_page_2.click_random_checkboxes(3)
-        game_page_2.click_next_btn_on_second_card()
+        game_page_2.click_random_checkbox(3)
+        game_page_2.click_next_btn_second_card()
         game_page_3 = GamePage3()
         assert game_page_3.state.is_displayed(), "Cтраница 3 карточки игры не отображена"
 

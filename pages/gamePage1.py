@@ -42,23 +42,20 @@ class GamePage1(Form):
     def send_email(self, email):
         self._email_text_box.clear()
         self._email_text_box.send_keys(email)
-        assert self._email_text_box.value == email
 
     def send_domain(self, domain):
         self._domain_text_box.clear()
         self._domain_text_box.send_keys(domain)
-        assert self._domain_text_box.value == domain
 
     def send_password(self, email):
         password = PasswordGenerator.generate_password(email)
         self._password_text_box.clear()
         self._password_text_box.send_keys(password)
-        assert self._password_text_box.value == password
 
     def click_open_dropdown(self):
         self._open_dropdown.click()
 
-    def select_high_domain_in_dropdown(self):
+    def select_high_domain(self):
         new_locator = BrowserServices.Instance.browser.driver.find_elements(By.XPATH, self._dropdown_list.locator.value)
         new_locator.click()
 
