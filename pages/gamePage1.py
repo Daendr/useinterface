@@ -1,3 +1,4 @@
+import random
 from py_selenium_auto.browsers.browser_services import BrowserServices
 from py_selenium_auto.elements.text_box import TextBox
 from py_selenium_auto.elements.label import Label
@@ -56,8 +57,10 @@ class GamePage1(Form):
         self._open_dropdown.click()
 
     def select_high_domain(self):
-        new_locator = BrowserServices.Instance.browser.driver.find_elements(By.XPATH, self._dropdown_list.locator.value)
-        new_locator.click()
+        new_locators = BrowserServices.Instance.browser.driver.find_elements(
+            By.XPATH, self._dropdown_list.locator.value)
+        random_locator = random.choice(new_locators)
+        random_locator.click()
 
     def agree_terms(self):
         self._terms_label_agree.click()
