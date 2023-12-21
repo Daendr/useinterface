@@ -27,7 +27,7 @@ class GamePage1(Form):
         Locator(By.CLASS_NAME, "dropdown__header"),
         "open_dropdown")
     _dropdown_list: Label = Label(
-        Locator(By.XPATH, "//*[@class='dropdown__list-item']"),
+        Locator(By.XPATH, "//*[@class='dropdown__list-item' and not(contains(@class, 'selected'))]"),
         "dropdown_list")
     _next_btn: Button = Button(
         Locator(By.CLASS_NAME, "button--secondary"),
