@@ -9,7 +9,7 @@ from utilities.passwordGenerator import PasswordGenerator
 from py_selenium_auto.elements.button import Button
 
 
-class GamePage1(Form):
+class GamePageLogin(Form):
 
     _email_text_box = TextBox(
         Locator(By.XPATH, "//*[@placeholder='Your email']"),
@@ -36,7 +36,7 @@ class GamePage1(Form):
     def __init__(self):
         super().__init__(
             Locator(By.CLASS_NAME, "login-form__terms-conditions"),
-            "Проверка для 1 карточки",
+            "Проверка для GamePageLogin это 1 карточка",
         )
 
     def send_email(self, email):

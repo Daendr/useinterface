@@ -10,7 +10,7 @@ from py_selenium_auto.elements.button import Button
 import subprocess
 
 
-class GamePage2(Form):
+class GamePageInterests(Form):
 
     _upload_button = Button(
         Locator(By.CLASS_NAME, "avatar-and-interests__upload-button"),
@@ -28,7 +28,7 @@ class GamePage2(Form):
     def __init__(self):
         super().__init__(
             Locator(By.CLASS_NAME, "avatar-and-interests__title"),
-            "Проверка для 2 карточки",
+            "Проверка для GamePageInterests - вторая карточка",
         )
 
     def upload_photo(self):

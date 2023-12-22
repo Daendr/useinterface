@@ -3,9 +3,9 @@ from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
 
 
-class GamePage3(Form):
+class GamePageDetails(Form):
     def __init__(self):
         super().__init__(
             Locator(By.CLASS_NAME, "personal-details__td-label"),
-            "Проверка для 3 карточки",
+            "Проверка для GamePageDetails - это 3 карточка",
         )

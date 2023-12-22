@@ -1,9 +1,9 @@
 import pytest
 from py_selenium_auto_core.logging.logger import Logger
 from pages.startPage import StartPage
-from pages.loginPage import GamePage1
-from pages.interestsPage import GamePage2
-from pages.detailsPage import GamePage3
+from pages.loginPage import GamePageLogin
+from pages.interestsPage import GamePageInterests
+from pages.detailsPage import GamePageDetails
 from pages.forms.gamePageCookieForm import GamePageCookieForm
 from pages.forms.gamePageHelpForm import GamePageHelpForm
 from pages.forms.gamePageTimer import GamePageTimer
@@ -21,7 +21,7 @@ class TestUserinterface:
 
         Logger.info("Шаг 2. Кликнуть по ссылке HERE для перехода на следующую страницу.")
         start_page.click_here_link()
-        game_page_1 = GamePage1()
+        game_page_1 = GamePageLogin()
         assert game_page_1.state.is_displayed(), "Cтраница 1 карточки игры не отображена"
 
         Logger.info("Шаг 3. Введите случайные действующий пароль,"
@@ -34,7 +34,7 @@ class TestUserinterface:
         game_page_1.select_high_domain()
         game_page_1.agree_terms()
         game_page_1.click_next_btn()
-        game_page_2 = GamePage2()
+        game_page_2 = GamePageInterests()
         assert game_page_2.state.is_displayed(), "Cтраница 2 карточки игры не отображена"
 
         Logger.info("Шаг 4. Выберите 3 случайных интереса, загрузите изображение, нажмите кнопку 'Next'")
@@ -42,7 +42,7 @@ class TestUserinterface:
         game_page_2.click_checkbox_unselectall()
         game_page_2.click_random_checkbox(3)
         game_page_2.click_next_btn_second_card()
-        game_page_3 = GamePage3()
+        game_page_3 = GamePageDetails()
         assert game_page_3.state.is_displayed(), "Cтраница 3 карточки игры не отображена"
 
     @staticmethod
@@ -56,7 +56,8 @@ class TestUserinterface:
         start_page.click_here_link()
         game_page_help_form = GamePageHelpForm()
         game_page_help_form.click_hide_help_form_btn()
-        assert game_page_help_form.state.wait_for_not_displayed(), "Форма не исчезла после нажатия кнопки cкрыть форму помощи"
+        assert game_page_help_form.state.wait_for_not_displayed(),\
+            "Форма не исчезла после нажатия кнопки cкрыть форму помощи"
 
     @staticmethod
     @pytest.mark.test_Accept_cookies
