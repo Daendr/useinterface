@@ -11,28 +11,27 @@ from py_selenium_auto.elements.button import Button
 
 class GamePage1(Form):
 
-    _email_text_box: TextBox = TextBox(
+    _email_text_box = TextBox(
         Locator(By.XPATH, "//*[@placeholder='Your email']"),
         "email")
-    _domain_text_box: TextBox = TextBox(
+    _domain_text_box = TextBox(
         Locator(By.XPATH, "//*[@placeholder='Domain']"),
         "domain")
-    _password_text_box: TextBox = TextBox(
+    _password_text_box = TextBox(
         Locator(By.XPATH, "//*[@placeholder='Choose Password']"),
         "password")
-    _terms_label_agree: Label = Label(
+    _terms_label_agree = Label(
         Locator(By.CLASS_NAME, "checkbox__box"),
         "terms_label_agree")
-    _open_dropdown: Label = Label(
+    _open_dropdown = Label(
         Locator(By.CLASS_NAME, "dropdown__header"),
         "open_dropdown")
-    _dropdown_list: Label = Label(
+    _dropdown_list = Label(
         Locator(By.XPATH, "//*[@class='dropdown__list-item' and not(contains(@class, 'selected'))]"),
         "dropdown_list")
-    _next_btn: Button = Button(
+    _next_btn = Button(
         Locator(By.CLASS_NAME, "button--secondary"),
         "next_btn")
-
 
     def __init__(self):
         super().__init__(

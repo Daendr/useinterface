@@ -5,7 +5,7 @@ from py_selenium_auto.elements.label import Label
 
 
 class GamePageTimer(Form):
-    _timer: Label = Label(
+    _timer = Label(
         Locator(By.CLASS_NAME, "timer--center"),
         "timer")
 
@@ -14,6 +14,6 @@ class GamePageTimer(Form):
             Locator(By.CLASS_NAME, "timer--center"),
             "timer")
 
-    def check_timer_starts_with_zero(self):
+    def timer_starts_with_zero(self):
         timer_text = self._timer.get_element().text
         return timer_text.startswith("00:00:00")

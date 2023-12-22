@@ -1,12 +1,12 @@
 import pytest
 from py_selenium_auto_core.logging.logger import Logger
-from pages.TheStartPage import StartPage
-from pages.gamePage1 import GamePage1
-from pages.gamePage2 import GamePage2
-from pages.gamePage3 import GamePage3
-from pages.gamePageCookieForm import GamePageCookieForm
-from pages.gamePageHelpForm import GamePageHelpForm
-from pages.gamePageTimer import GamePageTimer
+from pages.startPage import StartPage
+from pages.loginPage import GamePage1
+from pages.interestsPage import GamePage2
+from pages.detailsPage import GamePage3
+from pages.forms.gamePageCookieForm import GamePageCookieForm
+from pages.forms.gamePageHelpForm import GamePageHelpForm
+from pages.forms.gamePageTimer import GamePageTimer
 from utilities.generateRandomText import GenerateRandomText
 
 
@@ -19,8 +19,7 @@ class TestUserinterface:
         start_page = StartPage()
         assert start_page.state.is_displayed(), "Стартовая страница не отображена"
 
-        Logger.info("Шаг 2. Кликнуть по ссылке (в тексте 'Please click HERE to GO to the next page')"
-                    " для перехода на следующую страницу.")
+        Logger.info("Шаг 2. Кликнуть по ссылке HERE для перехода на следующую страницу.")
         start_page.click_here_link()
         game_page_1 = GamePage1()
         assert game_page_1.state.is_displayed(), "Cтраница 1 карточки игры не отображена"
@@ -38,7 +37,7 @@ class TestUserinterface:
         game_page_2 = GamePage2()
         assert game_page_2.state.is_displayed(), "Cтраница 2 карточки игры не отображена"
 
-        Logger.info("Шаг 4. Выберите 2 случайных интереса, загрузите изображение, нажмите кнопку 'Next'")
+        Logger.info("Шаг 4. Выберите 3 случайных интереса, загрузите изображение, нажмите кнопку 'Next'")
         game_page_2.upload_photo()
         game_page_2.click_checkbox_unselectall()
         game_page_2.click_random_checkbox(3)
@@ -55,10 +54,9 @@ class TestUserinterface:
 
         Logger.info("2. Скрыть форму помощи.")
         start_page.click_here_link()
-
         game_page_help_form = GamePageHelpForm()
-        game_page_help_form.click_next_btn()
-        assert game_page_help_form.state.wait_for_not_displayed(), "Форма не исчезла после нажатия кнопки Next"
+        game_page_help_form.click_hide_help_form_btn()
+        assert game_page_help_form.state.wait_for_not_displayed(), "Форма не исчезла после нажатия кнопки cкрыть форму помощи"
 
     @staticmethod
     @pytest.mark.test_Accept_cookies
@@ -69,7 +67,6 @@ class TestUserinterface:
 
         Logger.info("2. Принять cookies.")
         start_page.click_here_link()
-
         game_page_cookie_form = GamePageCookieForm()
         game_page_cookie_form.click_accept_cookies()
         assert game_page_cookie_form.state.wait_for_not_displayed(),\
@@ -83,4 +80,4 @@ class TestUserinterface:
         start_page.click_here_link()
 
         game_page_timer = GamePageTimer()
-        assert game_page_timer.check_timer_starts_with_zero(), "Время на таймере отличается от 00:00:00"
+        assert game_page_timer.timer_starts_with_zero(), "Время на таймере отличается от 00:00:00"

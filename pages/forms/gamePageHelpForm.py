@@ -5,7 +5,7 @@ from py_selenium_auto.elements.button import Button
 
 
 class GamePageHelpForm(Form):
-    _help_form_btn: Button = Button(
+    hide_help_form_btn = Button(
         Locator(By.CLASS_NAME, "help-form__send-to-bottom-button"),
         "help_form_btn")
 
@@ -14,5 +14,5 @@ class GamePageHelpForm(Form):
             Locator(By.CLASS_NAME, "help-form__send-to-bottom-button"),
             "help_form_btn")
 
-    def click_next_btn(self):
-        self._help_form_btn.click()
+    def click_hide_help_form_btn(self):
+        self.hide_help_form_btn.click()

@@ -5,7 +5,7 @@ from py_selenium_auto.elements.label import Label
 
 
 class GamePageCookieForm(Form):
-    _accept_cookies: Label = Label(
+    _accept_cookies = Label(
         Locator(By.CLASS_NAME, "button--transparent"),
         "accept_cookies")
 

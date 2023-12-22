@@ -5,7 +5,7 @@ from py_selenium_auto_core.locator.locator import Locator
 
 
 class StartPage(Form):
-    _here_link: Link = Link(
+    _here_link = Link(
         Locator(By.CLASS_NAME, "start__link"),
         "HERE",
     )

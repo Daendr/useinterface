@@ -12,16 +12,16 @@ import subprocess
 
 class GamePage2(Form):
 
-    _upload_button: Button = Button(
+    _upload_button = Button(
         Locator(By.CLASS_NAME, "avatar-and-interests__upload-button"),
         "upload_button")
-    _next_button_2_card: Button = Button(
+    _next_button_2_card = Button(
         Locator(By.XPATH, "//*[contains(text(), 'Next')]"),
         "next_button_2_card")
-    _check_boxes_elements: Label = Label(
+    _check_boxes_elements = Label(
         Locator(By.XPATH, "//label[not(contains(@for, 'select'))]"),
         "_check_boxes_elements")
-    _unselectall_checkboxes: Button = Button(
+    _unselectall_checkbox = Button(
         Locator(By.XPATH, f'//*[@for="interest_unselectall"]'),
         "_unselectall_checkboxes")
 
@@ -43,7 +43,7 @@ class GamePage2(Form):
         subprocess.run([autoit_exe_path])
 
     def click_checkbox_unselectall(self):
-        self._unselectall_checkboxes.click()
+        self._unselectall_checkbox.click()
 
     def click_random_checkbox(self, num):
         checkbox_list = BrowserServices.Instance.browser.driver.find_elements(
